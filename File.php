@@ -18,7 +18,7 @@ class File
 	// Constructor.
 	
 	public function __construct($filename, $mode = '') {
-		$this->_file = $filename;
+		$this->_file = ($filename instanceof File) ? $filename->path : $filename;
 		$this->mode = $mode;
 	}
 	
