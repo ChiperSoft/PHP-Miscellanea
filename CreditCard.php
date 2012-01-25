@@ -47,6 +47,7 @@ class CreditCard {
 				$this->city = $o['city'];
 				$this->state = $o['state'];
 				$this->zip = $o['zip'];
+				$this->country = $o['country']?$o['country']:'US';
 				
 				$d = max($o['date'], $o['expires'], $o['expiration'], $o['expiration_date']);
 				if ($d) {

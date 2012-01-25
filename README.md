@@ -14,6 +14,10 @@ Simple class for getting an array of color hex values spread across the entire s
 
 PHP equivalent of javascript's console.log, but sends to the system log.
 
+###CreditCard
+
+Data model for validating credit card information from form submissions and detecting card type.
+
 ###DateRange
 
 Simple object for storing a date range.  Includes static functions for getting common ranges such as This Week, Last Week, Last Month, etc.
