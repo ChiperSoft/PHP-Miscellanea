@@ -35,6 +35,9 @@ class File
 			case 'name':
 				return basename($this->_file);
 				
+			case 'filename':
+				return pathinfo($this->_file, PATHINFO_FILENAME);
+
 			case 'extension':
 				return pathinfo($this->_file, PATHINFO_EXTENSION);
 				
