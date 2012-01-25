@@ -4,7 +4,7 @@ class ColorWheel {
 	var $hues;
 	var $values;
 	
-	function ColorWheel($totalColors, $saturation=100, $brightness=100) {
+	function __construct($totalColors, $saturation=100, $brightness=100) {
 		$distance = 360 / max(5,$totalColors);
 		for ($i=0;$i<$totalColors;$i++) {
 			$this->hues[$i] = $distance * $i;
