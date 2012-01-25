@@ -315,7 +315,10 @@ class ImageFile extends File {
 		// If the size did not change, don't even record the modification
 		$same_size   = $orig_width == $new_width || $orig_height == $new_height;
 		$wont_change = ($orig_width < $new_width || $orig_height < $new_height) && !$allow_upsizing;
-		if ($same_size || $wont_change) {
+		
+		if (!$same_size && $wont_change) {
+			return $this->crop(min($canvas_width, $orig_width), min($canvas_height, $orig_height));
+		} elseif ($same_size && !$wont_change) {
 			return $this;
 		}
 		
