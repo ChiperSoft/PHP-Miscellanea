@@ -153,6 +153,12 @@ class File
 		$this->lineEnding = $lineEnding;
 	}
 	
+	public function descendentOf($path) {
+		$path = realpath(($path instanceof File) ? $path->path : $filename);
+		
+		return (strpos($this->path, $path) === 0);
+	}
+	
 	public function verifyParent() {
 		if ($this->exists) return true;
 		if (file_exists(dirname($this->_file))) return true;
