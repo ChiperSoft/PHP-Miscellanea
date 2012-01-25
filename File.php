@@ -69,6 +69,10 @@ class File
 				
 			case 'is_symlink':
 				return is_link($this->_file);
+				
+			case 'is_hidden':
+				if ($this->name[0]==='.') return true;
+				return false;
 
 			case 'size':
 				return sprintf("%u", filesize($this->_file)); //formatting as string to avoid signed integer overflow
