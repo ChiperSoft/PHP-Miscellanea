@@ -2,7 +2,7 @@
 
 class ImageFile extends File {
 	protected $_image;
-	protected $_modifications;
+	protected $_modifications = array();
 
 	public $JPEGQuality=80;
 	
