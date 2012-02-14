@@ -2,7 +2,35 @@
 
 class DateRange {
 	var $start;
-	var $end;
+	var $stop;
+	
+	function __construct($start=null, $stop=null) {
+		
+		$this->start = $this->parse($start);
+		$this->stop = $this->parse($stop);
+
+	}
+	
+	private function parse($input) {
+		if ($input !== null) {
+			if ($input instanceof DateTime) return $input;
+	 		else {
+				if (is_string($input)) {
+					try {
+						return new DateTime($input);
+					} catch (Exception $e) {
+						return null;
+					}
+				} elseif (is_integer($input) && $input>0) {
+					$ret = new DateTime();
+					$ret->setTimestamp($input);
+					return $ret;
+				} else {
+					return null;
+				}
+			}
+		}
+	}
 	
 	static function ThisWeek() {
 		$o = new self();
