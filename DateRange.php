@@ -4,6 +4,13 @@ class DateRange {
 	var $start;
 	var $stop;
 	
+	var $formats = array(
+		'full'			=>array('F jS, Y',' - ','F jS, Y'),
+		'same_year'		=>array('F jS',' - ','F jS, Y'),
+		'same_month'	=>array('F jS',' - ','jS, Y'),
+		'same_day'		=>array('F jS, Y', '', '')
+	);
+	
 	function __construct($start=null, $stop=null) {
 		
 		$this->start = $this->parse($start);
@@ -32,6 +39,45 @@ class DateRange {
 		}
 	}
 	
+	
+	function format($force = false, $formats = array()) {
+		$formats = array_merge($this->formats, $formats);
+		$out = array();
+		if ($this->start && !$this->stop) {
+			$start = $this->start;
+			$stop = $this->start;
+		} elseif (!$this->start && $this->stop) {
+			$start = $this->stop;
+			$stop = $this->stop;
+		} else {
+			$start = $this->start;
+			$stop = $this->stop;
+		}
+		
+		if ($force) $format = $formats[$force];
+		else {
+			if ($start->format('Y') != $stop->format('Y')) {
+				$format = $formats['full'];
+			} elseif ($start->format('Ym') != $stop->format('Ym')) {
+				$format = $formats['same_year'];
+			} elseif ($start->format('Ymd') != $stop->format('Ymd')) {
+				$format = $formats['same_month'];
+			} else {
+				$format = $formats['same_day'];
+			}
+		}
+		
+		$format[0] = $start->format($format[0]);
+		$format[2] = $stop->format($format[2]);
+		
+		return implode('', $format);
+	}
+	
+	
+/**
+	Static Presets
+*/
+	
 	static function ThisWeek() {
 		return new self('today -'.date('w').' days' , 'today +'.(6-date('w')).' days');
 	}
@@ -58,3 +104,6 @@ class DateRange {
 	
 }
 
+// $dr = DateRange::ThisWeek();
+// $dr->stop->modify('+1 month');
+// echo $dr->format('same_month');
