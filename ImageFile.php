@@ -134,31 +134,31 @@ class ImageFile extends File {
 		
 		// Make sure the user input is valid
 		if (!is_numeric($crop_from_x) || $crop_from_x < 0 || $crop_from_x > $orig_width - 1) {
-			throw new Exception(
+			throw new Exception(sprintf(
 				'The crop-from x specified, %s, is not a number, is less than zero, or would result in a zero-width image',
 				$crop_from_x
-			);
+			));
 		}
 		if (!is_numeric($crop_from_y) || $crop_from_y < 0 || $crop_from_y > $orig_height - 1) {
-			throw new Exception(
+			throw new Exception(sprintf(
 				'The crop-from y specified, %s, is not a number, is less than zero, or would result in a zero-height image',
 				$crop_from_y
-			);
+			));
 		}
 		
 		if (!is_numeric($new_width) || $new_width <= 0 || $crop_from_x + $new_width > $orig_width) {
-			throw new Exception(
+			throw new Exception(sprintf(
 				'The new width specified, %1$s, is not a number, is less than or equal to zero, or is larger than can be cropped with the specified crop-from x of %2$s',
 				$new_width,
 				$crop_from_x
-			);
+			));
 		}
 		if (!is_numeric($new_height) || $new_height <= 0 || $crop_from_y + $new_height > $orig_height) {
-			throw new Exception(
+			throw new Exception(sprintf(
 				'The new height specified, %1$s, is not a number, is less than or equal to zero, or is larger than can be cropped with the specified crop-from y of %2$s',
 				$new_height,
 				$crop_from_y
-			);
+			));
 		}
 		
 		// If nothing changed, don't even record the modification
@@ -195,16 +195,16 @@ class ImageFile extends File {
 
 		// Make sure the user input is valid
 		if ((!is_numeric($ratio_width) && $ratio_width !== NULL) || $ratio_width < 0) {
-			throw new Exception(
+			throw new Exception(sprintf(
 				'The ratio width specified, %s, is not a number or is less than or equal to zero',
 				$ratio_width
-			);
+			));
 		}
 		if ((!is_numeric($ratio_height) && $ratio_height !== NULL) || $ratio_height < 0) {
-			throw new Exception(
+			throw new Exception(sprintf(
 				'The ratio height specified, %s, is not a number or is less than or equal to zero',
 				$ratio_height
-			);
+			));
 		}	
 		
 		// Make sure 
@@ -271,21 +271,21 @@ class ImageFile extends File {
 	public function resize($canvas_width, $canvas_height, $allow_upsizing=FALSE, $fill_canvas=FALSE) {
 		// Make sure the user input is valid
 		if ((!is_numeric($canvas_width) && $canvas_width !== NULL) || $canvas_width < 0) {
-			throw new Exception(
+			throw new Exception(sprintf(
 				'The canvas width specified, %s, is not an integer or is less than zero',
 				$canvas_width
-			);
+			));
 		}
 		if ((!is_numeric($canvas_height) && $canvas_height !== NULL) || $canvas_height < 0) {
-			throw new Exception(
+			throw new Exception(sprintf(
 				'The canvas height specified, %s is not an integer or is less than zero',
 				$canvas_height
-			);
+			));
 		}
 		if ($canvas_width == 0 && $canvas_height == 0) {
-			throw new Exception(
+			throw new Exception(sprintf(
 				'The canvas width and canvas height are both zero, so no resizing will occur'
-			);
+			));
 		}
 		
 		$orig_width  = $this->width;
