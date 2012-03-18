@@ -79,6 +79,52 @@ class DateRange {
 	}
 	
 	
+	function difference($expanded = false, $format_future = 'in %s', $format_past = '%s ago') {
+		//inspired by http://www.zachstronaut.com/posts/2009/01/20/php-relative-date-time-string.html
+		
+		$start = $this->start;
+		if (!$start || $start->format('Y') < 1900) return null; //invalid date entered
+		
+		$stop = $this->stop;
+		if ($stop === null) $stop = new DateTime();
+		
+		$future = $start > $stop;
+		
+		$etime = abs($stop->format('U') - $start->format('U'));
+		
+		if ($etime < 1) return 'now';
+		
+		$a = array(
+			12 * 30 * 24 * 60 * 60  =>  'year',
+			30 * 24 * 60 * 60		=>  'month',
+			 7 * 24 * 60 * 60		=>	'week',
+			24 * 60 * 60			=>  'day',
+			60 * 60					=>  'hour',
+			60						=>  'minute',
+			 1						=>  'second'
+		);
+		
+		$result = array();
+		foreach ($a as $secs => $str) {
+			$d = $etime / $secs;
+			if ($d >= 1) {
+				if ($expanded) {
+					$r = floor($d);
+					$result[$str] =  $r . ' ' . $str . ($r > 1 ? 's' : '');
+					$etime -= $r * $secs;
+				} else {
+					$r = round($d);
+					$result[] =  $r . ' ' . $str . ($r > 1 ? 's' : '');
+					break;
+				}
+			}
+		}
+		
+		$result = implode(', ', $result);
+		return sprintf($future ? $format_future : $format_past, $result);
+	}
+	
+	
 /**
 	Static Presets
 */
@@ -109,6 +155,13 @@ class DateRange {
 	
 }
 
-// $dr = DateRange::ThisWeek();
-// $dr->stop->modify('+1 month');
-// echo $dr->format('same_month');
+/*
+$dr = DateRange::ThisWeek();
+$dr->stop->modify('+1 month');
+echo $dr->format('same_month');
+*/
+
+/*
+$dr = new DateRange('2012-03-18 00:00:00');
+echo $dr->difference();
+*/
