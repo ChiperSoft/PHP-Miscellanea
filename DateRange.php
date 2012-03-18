@@ -18,6 +18,11 @@ class DateRange {
 
 	}
 	
+	static function Init($start = null, $stop = null) {
+		$o = new self();
+		return $o;
+	}
+	
 	private function parse($input) {
 		if ($input !== null) {
 			if ($input instanceof DateTime) return $input;
