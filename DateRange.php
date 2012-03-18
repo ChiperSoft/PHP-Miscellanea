@@ -19,8 +19,7 @@ class DateRange {
 	}
 	
 	static function Init($start = null, $stop = null) {
-		$o = new self();
-		return $o;
+		return new self($start, $stop);
 	}
 	
 	private function parse($input) {
