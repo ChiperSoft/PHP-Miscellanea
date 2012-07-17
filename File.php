@@ -476,7 +476,7 @@ class File
 	 * @param  string $extension  The extension of the filetype, only used for difficult files such as Microsoft office documents
 	 * @return string  The mime type of the file
 	 */
-	static private function DetermineMimeTypeByContents($content, $extension) {
+	static public function DetermineMimeTypeByContents($content, $extension) {
 		$length = strlen($content);
 		$_0_8   = substr($content, 0, 8);
 		$_0_6   = substr($content, 0, 6);
@@ -708,7 +708,7 @@ class File
 	 * @param  string $extension  The file extension
 	 * @return string  The mime type of the file
 	 */
-	static private function DetermineMimeTypeByExtension($extension) {
+	static public function DetermineMimeTypeByExtension($extension) {
 		switch ($extension) {
 			case 'css':
 				return 'text/css';
