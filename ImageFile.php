@@ -5,6 +5,7 @@ class ImageFile extends File {
 	protected $_modifications = array();
 
 	public $JPEGQuality=80;
+	public $Density=72;
 	
 	static $convert_path;
 	
@@ -71,6 +72,12 @@ class ImageFile extends File {
 	 **/
 	public function setQuality($quality) {
 		$this->JPEGQuality = (int)$quality;
+		return $this;
+	}
+
+
+	public function setDensity($density) {
+		$this->Density = $density;
 		return $this;
 	}
 	
@@ -399,7 +406,7 @@ class ImageFile extends File {
 		if ($this->animatedgif) 	$command[] = '-coalesce';
 		if ($this->format=='tif') 	$command[] = '-depth 8';
 		
-		$colorspace = 'RGB';
+		$colorspace = 'sRGB';
 		foreach ($this->_modifications as $mod) {
 			switch ($mod['operation']) {
 				case 'resize':
@@ -408,7 +415,7 @@ class ImageFile extends File {
 					break;
 				case 'crop':
 					$command[] = "-crop \"{$mod['width']}x{$mod['height']}+{$mod['start_x']}+{$mod['start_y']}\"";
-					$command[] = "-repage \"{$mod['width']}x{$mod['height']}+0+0\"";
+					$command[] = "+repage";
 					break;
 				case 'desaturate':
 					$colorspace = 'GRAY';
@@ -424,6 +431,8 @@ class ImageFile extends File {
 		if ($new_format=='jpg') {
 			$command[] = "-compress JPEG -quality {$this->JPEGQuality}";
 		}
+
+		$command[] = "-density {$this->Density}";
 		
 		$command[] = escapeshellarg("{$new_format}:{$output_file->path}");
 		
