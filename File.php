@@ -383,8 +383,8 @@ class File
 	 * @param  mixed   $filename  Present the file as an attachment instead of just outputting type headers - if a string is passed, that will be used for the filename, if `TRUE` is passed, the current filename will be used
 	 * @return fFile  The file object, to allow for method chaining
 	 */
-	public function output($headers, $filename=NULL) {
-		if (ob_get_level() > 0) throw new FileInvalidAccessMode('File cannot be output when output buffering is enabled.');
+	public function output($headers=true, $filename=NULL) {
+		if (ob_get_level() > 1) throw new FileInvalidAccessMode('File cannot be output when output buffering is enabled.');
 		
 		if ($headers) {
 			if ($filename !== NULL) {
