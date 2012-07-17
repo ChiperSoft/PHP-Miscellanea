@@ -354,7 +354,7 @@ class File
 	public function writeRow($data) {
 		if (!$this->pointer) $this->open();
 		if (!$this->canWrite) throw new FileInvalidAccessMode('File is not open for writing: ' . $this->_file);
-		return fwrite($this->pointer, $data, $this->csvDelimiter, $this->csvEnclosure);
+		return fputcsv($this->pointer, $data, $this->csvDelimiter, $this->csvEnclosure);
 	}
 	
 	public function flush() {
